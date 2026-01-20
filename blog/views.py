@@ -1,5 +1,4 @@
 from django.shortcuts import render,redirect 
-from django.http import HttpResponseRedirect
 from .models import Post 
 from .forms import PostForm 
 # Create your views here.
@@ -26,6 +25,7 @@ def edit_post(request,post_id):
 		form = PostForm(instance=posts,data=request.POST)
 		if form.is_valid():
 			form.save()
+			return redirect('/')
 	context = {
 	    'form' : form,
 	    'posts' : posts 
@@ -35,4 +35,5 @@ def edit_post(request,post_id):
 def delete_post(request,post_id=None):
 	post = Post.objects.get(id=post_id)
 	post.delete()
-	return HttpResponseRedirect("home")
+	return redirect('/')
+
